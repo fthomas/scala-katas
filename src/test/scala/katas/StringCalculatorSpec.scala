@@ -31,4 +31,7 @@ class StringCalculatorSpec extends FlatSpec with Matchers {
   it should "ignore numbers bigger than 100" in {
     add("2,1001") should be(2)
   }
+  it should "handle delimiters of any length" in {
+    add("//[***]\n1***2***3") should be(6)
+  }
 }

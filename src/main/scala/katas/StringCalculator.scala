@@ -1,13 +1,20 @@
 package katas
 
+import java.util.regex.Pattern
+
 object StringCalculator {
   def add(numbers: String): Int = {
     def splitNumbers(input: String): List[Int] = {
       val marker = "//"
       val lines = input.lines
       val delimiter =
-        if (input.startsWith(marker)) lines.next().stripPrefix(marker)
-        else ","
+        if (input.startsWith(marker)) {
+          val rawDelimiter = lines.next()
+            .stripPrefix(marker)
+            .stripPrefix("[")
+            .stripSuffix("]")
+          Pattern.quote(rawDelimiter)
+        } else ","
       lines.toList.flatMap(_.split(delimiter)).map(_.toInt)
     }
 
