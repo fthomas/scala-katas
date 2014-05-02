@@ -1,0 +1,5 @@
+package katas
+
+object StringCalculator {
+
+}
