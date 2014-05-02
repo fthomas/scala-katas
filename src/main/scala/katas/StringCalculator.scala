@@ -8,6 +8,12 @@ object StringCalculator {
       if (numbers.startsWith(marker)) lines.next().stripPrefix(marker)
       else ","
 
-    lines.flatMap(_.split(delimiter)).map(_.toInt).sum
+    val ints = lines.flatMap(_.split(delimiter)).map(_.toInt).toList
+    val negatives = ints.filter(_ < 0)
+
+    if (negatives.nonEmpty)
+      throw new IllegalArgumentException("negatives not allowed: " + negatives.mkString(", "))
+    else
+      ints.sum
   }
 }

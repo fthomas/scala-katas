@@ -24,4 +24,8 @@ class StringCalculatorSpec extends FlatSpec with Matchers {
   it should "allow the delimiter to be specified" in {
     add("//;\n1;2") should be(3)
   }
+  it should "throw an exception for negative numbers" in {
+    val exception = intercept[IllegalArgumentException](add("-1,1,-2"))
+    exception.getMessage should be("negatives not allowed: -1, -2")
+  }
 }
