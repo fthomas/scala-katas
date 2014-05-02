@@ -2,6 +2,8 @@ package katas
 
 import java.util.regex.Pattern
 
+// http://osherove.com/tdd-kata-1/
+
 object StringCalculator {
   def add(numbers: String): Int = {
     def parseDelimiters(raw: String): String = {
