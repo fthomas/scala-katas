@@ -6,7 +6,7 @@ import java.util.regex.Pattern
 
 object StringCalculator {
   def add(numbers: String): Int = {
-    def parseDelimiters(raw: String): String = {
+    def delimitersAsRegex(raw: String): String = {
       val delimiters = """\[[^\[\]]+\]+|.+""".r.findAllIn(raw)
       delimiters
         .map(_.stripPrefix("[").stripSuffix("]"))
@@ -20,10 +20,10 @@ object StringCalculator {
       val delimiters =
         if (input.startsWith(marker)) {
           val delimitersLine = lines.next().stripPrefix(marker)
-          parseDelimiters(delimitersLine)
+          delimitersAsRegex(delimitersLine)
         } else ","
 
-      lines.toList.flatMap(_.split(delimiters)).map(_.toInt)
+      lines.flatMap(_.split(delimiters)).map(_.toInt).toList
     }
 
     def throwIfContainsNegatives(list: List[Int]): Unit = {
