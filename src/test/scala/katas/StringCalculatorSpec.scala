@@ -21,4 +21,7 @@ class StringCalculatorSpec extends FlatSpec with Matchers {
   it should "allow new lines as delimiters" in {
     add("1\n2,3") should be(6)
   }
+  it should "allow the delimiter to be specified" in {
+    add("//;\n1;2") should be(3)
+  }
 }
