@@ -19,8 +19,8 @@ object StringCalculator {
       }
     }
 
-    val integers = splitNumbers(numbers)
-    throwIfContainsNegatives(integers)
-    integers.sum
+    val smallIntegers = splitNumbers(numbers).filter(_ <= 1000)
+    throwIfContainsNegatives(smallIntegers)
+    smallIntegers.sum
   }
 }

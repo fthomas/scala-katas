@@ -28,4 +28,7 @@ class StringCalculatorSpec extends FlatSpec with Matchers {
     val exception = intercept[IllegalArgumentException](add("-1,1,-2"))
     exception.getMessage should be("negatives not allowed: -1, -2")
   }
+  it should "ignore numbers bigger than 100" in {
+    add("2,1001") should be(2)
+  }
 }
