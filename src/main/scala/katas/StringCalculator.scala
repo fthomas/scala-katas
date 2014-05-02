@@ -6,10 +6,13 @@ import java.util.regex.Pattern
 
 object StringCalculator {
   def add(numbers: String): Int = {
+    def stripSquareBrackets(str: String): String =
+      str.stripPrefix("[").stripSuffix("]")
+
     def delimitersAsRegex(raw: String): String = {
       val delimiters = """\[[^\[\]]+\]+|.+""".r.findAllIn(raw)
       delimiters
-        .map(_.stripPrefix("[").stripSuffix("]"))
+        .map(stripSquareBrackets)
         .map(Pattern.quote)
         .mkString("(", "|", ")")
     }
