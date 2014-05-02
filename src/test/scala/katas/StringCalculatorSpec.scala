@@ -34,4 +34,9 @@ class StringCalculatorSpec extends FlatSpec with Matchers {
   it should "handle delimiters of any length" in {
     add("//[***]\n1***2***3") should be(6)
   }
+  it should "allow multiple delimiters" in {
+    add("//[*][%]\n1*2%3") should be(6)
+    add("//[**][%]\n1**2%3") should be(6)
+    add("//[**][%%]\n1**2%%3") should be(6)
+  }
 }

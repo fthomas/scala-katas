@@ -4,18 +4,24 @@ import java.util.regex.Pattern
 
 object StringCalculator {
   def add(numbers: String): Int = {
+    def parseDelimiters(raw: String): String = {
+      val delimiters = """\[[^\[\]]+\]+|.+""".r.findAllIn(raw)
+      delimiters
+        .map(_.stripPrefix("[").stripSuffix("]"))
+        .map(Pattern.quote)
+        .mkString("(", "|", ")")
+    }
+
     def splitNumbers(input: String): List[Int] = {
       val marker = "//"
       val lines = input.lines
-      val delimiter =
+      val delimiters =
         if (input.startsWith(marker)) {
-          val rawDelimiter = lines.next()
-            .stripPrefix(marker)
-            .stripPrefix("[")
-            .stripSuffix("]")
-          Pattern.quote(rawDelimiter)
+          val delimitersLine = lines.next().stripPrefix(marker)
+          parseDelimiters(delimitersLine)
         } else ","
-      lines.toList.flatMap(_.split(delimiter)).map(_.toInt)
+
+      lines.toList.flatMap(_.split(delimiters)).map(_.toInt)
     }
 
     def throwIfContainsNegatives(list: List[Int]): Unit = {
