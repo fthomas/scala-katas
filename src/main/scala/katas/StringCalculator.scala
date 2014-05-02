@@ -2,18 +2,25 @@ package katas
 
 object StringCalculator {
   def add(numbers: String): Int = {
-    val marker = "//"
-    val lines = numbers.lines
-    val delimiter =
-      if (numbers.startsWith(marker)) lines.next().stripPrefix(marker)
-      else ","
+    def splitNumbers(input: String): List[Int] = {
+      val marker = "//"
+      val lines = input.lines
+      val delimiter =
+        if (input.startsWith(marker)) lines.next().stripPrefix(marker)
+        else ","
+      lines.toList.flatMap(_.split(delimiter)).map(_.toInt)
+    }
 
-    val ints = lines.flatMap(_.split(delimiter)).map(_.toInt).toList
-    val negatives = ints.filter(_ < 0)
+    def throwIfContainsNegatives(list: List[Int]): Unit = {
+      val negatives = list.filter(_ < 0)
+      if (negatives.nonEmpty) {
+        val message = "negatives not allowed: " + negatives.mkString(", ")
+        throw new IllegalArgumentException(message)
+      }
+    }
 
-    if (negatives.nonEmpty)
-      throw new IllegalArgumentException("negatives not allowed: " + negatives.mkString(", "))
-    else
-      ints.sum
+    val integers = splitNumbers(numbers)
+    throwIfContainsNegatives(integers)
+    integers.sum
   }
 }
